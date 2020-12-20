@@ -15,11 +15,11 @@ client = Client(ACCOUNT_SID, AUTH_TOKEN)
 
 @app.route("/")
 def get_lyrics():
-    # message = client.messages.create(
-    #     body="Hello there",
-    #     from_='+16479458787',
-    #     to='+16479838785'
-    # )
+    message = client.messages.create(
+        body="Hello there",
+        from_='+16479458787',
+        to='+16479838785'
+    )
     return "hello, world"
 
 
