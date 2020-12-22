@@ -37,6 +37,9 @@ def scrape_top_five(search):
     song_results = soup.find('b', text="Song results:")
     lyrics_results = soup.find('b', text="Lyrics results:")
 
+    print(song_results)
+    print(lyrics_results)
+
     has_song_results = False
     has_lyrics_results = False
 
