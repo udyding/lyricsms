@@ -28,12 +28,7 @@ def get_lyrics():
     resp = MessagingResponse()
     message = "\n\n"
 
-    if not query:
-        page = requests.get(
-            "https://search.azlyrics.com/search.php?q=dynamite")
-        soup = BeautifulSoup(page.text, "html.parser")
-        return str(soup)
-    elif query[0] == "?":
+    if query[0] == "?":
         selection = int(query[1])
         url = choices.get(selection, None)
         if not url:
