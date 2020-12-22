@@ -27,7 +27,9 @@ def get_lyrics():
     resp = MessagingResponse()
     message = "\n\n"
 
-    if query[0] == "?":
+    if not query:
+        return scrape_top_five("hello")
+    elif query[0] == "?":
         selection = int(query[1])
         url = choices.get(selection, None)
         if not url:
