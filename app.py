@@ -1,10 +1,11 @@
 import os
 from scrape import scrape_song_info, scrape_top_five
-from scrape import scrape_song_info
 from flask import Flask, request
 from twilio.rest import Client
 from dotenv import load_dotenv
 from twilio.twiml.messaging_response import MessagingResponse
+from bs4 import BeautifulSoup
+import requests
 load_dotenv()
 
 app = Flask(__name__)
@@ -28,7 +29,10 @@ def get_lyrics():
     message = "\n\n"
 
     if not query:
-        return scrape_top_five("hello")
+        page = requests.get(
+            "https://search.azlyrics.com/search.php?q=dynamite")
+        soup = BeautifulSoup(page.text, "html.parser")
+        return str(soup)
     elif query[0] == "?":
         selection = int(query[1])
         url = choices.get(selection, None)
