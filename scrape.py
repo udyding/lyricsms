@@ -2,7 +2,7 @@ import requests
 import re
 from bs4 import BeautifulSoup
 
-# get the data
+# get the lyrics of the song
 
 
 def scrape_song_info(url):
@@ -18,9 +18,10 @@ def scrape_song_info(url):
 
     lyrics = '\n'.join(lyrics[2:])
 
-    return artist, title, lyrics  # string, string, string
+    return artist, title, lyrics
 
 
+# get the top five song and lyrics results
 def scrape_top_five(search):
     url = f"https://search.azlyrics.com/search.php?q={search}"
     page = requests.get(url)
@@ -65,8 +66,6 @@ def scrape_top_five(search):
         num_results = int(soup.find(
             'div', {'class': 'panel-heading'}).find('small').text.split('of ')[1].split(' found')[0])
 
-        # if num_results >= 20:
-        #     lyrics_table = lyrics_table.find_all('a')[:5]
         lyrics_table = lyrics_table.find_all('a')[:5]
         for item in lyrics_table:
             link = item['href']
@@ -109,7 +108,7 @@ def scrape_top_five(search):
         message += "\n"
 
     message += "Choose a song by typing its number."
-    return message, choices  # string, dict
+    return message, choices
 
 
 if __name__ == "__main__":

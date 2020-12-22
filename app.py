@@ -16,12 +16,12 @@ AUTH_TOKEN = os.getenv("AUTH_TOKEN")
 
 client = Client(ACCOUNT_SID, AUTH_TOKEN)
 
-choices = {}
+user_choices = {}
 
 
 @app.route("/", methods=['GET', 'POST'])
 def get_lyrics():
-    global choices
+    global user_choices
     from_number = request.args.get('From')
     query = request.args.get('Body')
 
@@ -30,16 +30,16 @@ def get_lyrics():
 
     if query[0] == "?":
         selection = int(query[1])
-        url = choices.get(selection, None)
+        url = user_choices.get(from_number).get(selection, None)
         if not url:
             message += "Invalid selection."
         else:
-            song_info = scrape_song_info(choices[selection])
+            song_info = scrape_song_info(user_choices[from_number][selection])
             message += f"{song_info[1]} - {song_info[0]}\n\n"
             message += song_info[2]
     else:
         top_five = scrape_top_five(query)
-        choices = top_five[1]
+        user_choices[from_number] = top_five[1]
         message += top_five[0]
 
     print(message)
